@@ -1,0 +1,13 @@
+
+.DS_Store
+.idea/KimSoungRyoulRepo.iml
+.idea/inspectionProfiles/
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml
+.idea/*
+
+
+
+
+venv/
