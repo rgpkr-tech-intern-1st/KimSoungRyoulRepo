@@ -76,12 +76,12 @@ WSGI_APPLICATION = 'ksr_app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': 'ksr_db',
-        # 'USER': 'root',
-        # 'PASSWORD': '1234',
-        # 'HOST': '127.0.0.1',
-        # 'PORT': '3306',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'psql_database',
+        'USER': 'localroot',
+        'PASSWORD': '1234',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
 
     }
 }
