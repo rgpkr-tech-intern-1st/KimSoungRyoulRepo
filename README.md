@@ -1,6 +1,6 @@
 
 
-#   쇼핑몰서비스API with Django 
+#   요기요 서비스API with Django 
 
 ## 공부해야할 내용 
 
