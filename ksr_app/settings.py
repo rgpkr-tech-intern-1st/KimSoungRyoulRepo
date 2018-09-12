@@ -5,6 +5,11 @@ superuser
 id : root
 password: rlatjdfuf
 
+Maven 의 pom.xml 과 springboot의 application.properties 를 합쳐놓은듯 하다
+
+project의 필요 lib는 virtual Env 에서 하고 여기서 서비스규모의 모듈들을 통합한다
+
+
 
 """
 
@@ -35,6 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'rest_framework',
+    'user_mgt',
+    'product_mgt',
+    'product_orders_mgt',
+    'payments',
+
 
 
 ]
