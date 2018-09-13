@@ -3,26 +3,34 @@
 from django.db import models
 
 
-class Restaurant:
-    name = models.CharField(null=False)
-
-    rest_owner = models.CharField(null=False)
-
-    
-class Food(models.Model):
-    name = models.CharField(max_length=50)
-
-    price = models.PositiveIntegerField()
-
-    # 메뉴를 등록한 날짜
+# 모든 객체는 객체가 등록되는 시점을 기록해야하기때문에 이 두가지 필드를 가지고잇는다.
+class AbstractModel(models.Model):
     reg_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['id', '']
+        abstract = True
 
 
-class FoodOption(models.Model):
+class Restaurant(models, AbstractModel):
+    name = models.CharField(null=False)
+    rest_owner = models.CharField(null=False)
+
+
+class Food(models.Model, AbstractModel):
+    name = models.CharField(max_length=50)
+    price = models.PositiveIntegerField()
+
+    # 메뉴를 등록한 날짜
+    # reg_date = models.DateTimeField(auto_now_add=True)
+    # modified_date = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        # id로 정렬 하고 그다음 음식의 이름순으로 정렬
+        ordering = ['id', 'name']
+
+
+class FoodOption(models.Model, AbstractModel):
     name = models.CharField(max_length=100)
 
     price = models.PositiveIntegerField()
@@ -30,11 +38,11 @@ class FoodOption(models.Model):
     related_food = models.ForeignKey(Food, on_delete=models.CASCADE)
 
     # 메뉴를 등록한 날짜
-    reg_date = models.DateTimeField(auto_now_add=True)
-    modified_date = models.DateTimeField(auto_now=True)
+    # reg_date = models.DateTimeField(auto_now_add=True)
+    # modified_date = models.DateTimeField(auto_now=True)
 
 
-class OrderedFood(models.Model):
+class OrderedFood(models.Model, AbstractModel):
     # 주문되어지는 음식 1개
     required_food = models.OneToOneField(Food, null=False, on_delete=models.CASCADE)
 

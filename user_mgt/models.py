@@ -5,13 +5,12 @@ from django.db import models
 
 # 장고 기본제공인 auth_user 모델과 1대1 관계를 맺고 싶음
 from payments.models import Payment
-
-
 # 장고에서는 이미 기본적으로 인증 시스템이 제공됨
 # 그렇기에 회원 정보 관리쪽만 하면 될듯
+from product_mgt.models import AbstractModel
 
 
-class UserInfo(models.Model):
+class UserInfo(models.Model, AbstractModel):
 
     user = models.OneToOneField(User, null=False, primary_key=True, on_delete=models.CASCADE)
 
@@ -25,12 +24,12 @@ class UserInfo(models.Model):
     owner_mileage_amount = models.PositiveIntegerField(default=0)
 
     # 수정 시간과 생성시간 기록
-    reg_date = models.DateTimeField(auto_now_add=True)
-    modified_date = models.DateTimeField(auto_now=True)
+    # reg_date = models.DateTimeField(auto_now_add=True)
+    # modified_date = models.DateTimeField(auto_now=True)
 
 
 # 결제 기록에 의해 마일리지가 발생하는 것을 기록
-class MileageHistory(models.Model):
+class MileageHistory(models.Model, AbstractModel):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -41,4 +40,4 @@ class MileageHistory(models.Model):
     related_payment = models.OneToOneField(Payment, null=False, on_delete=models.CASCADE)
 
     # 마일리지 발생기록은 수정이 없으므로 생성시간만 기록
-    reg_date = models.DateTimeField(auto_now_add=True)
+    # reg_date = models.DateTimeField(auto_now_add=True)
