@@ -4,14 +4,15 @@ from django.contrib.auth.models import User
 from django.db import models
 
 # 장고 기본제공인 auth_user 모델과 1대1 관계를 맺고 싶음
+from ksr_app.models import AbstractModel
 from payments.models import Payment
+
+
 # 장고에서는 이미 기본적으로 인증 시스템이 제공됨
 # 그렇기에 회원 정보 관리쪽만 하면 될듯
-from product_mgt.models import AbstractModel
 
 
-class UserInfo(models.Model, AbstractModel):
-
+class UserInfo(AbstractModel):
     user = models.OneToOneField(User, null=False, primary_key=True, on_delete=models.CASCADE)
 
     # auth_user에도 있지만 이름 하나 가져오자고 조인하는것은 비효율적일것 같다 그래서 그냥 중복관리
@@ -29,8 +30,7 @@ class UserInfo(models.Model, AbstractModel):
 
 
 # 결제 기록에 의해 마일리지가 발생하는 것을 기록
-class MileageHistory(models.Model, AbstractModel):
-
+class MileageHistory(AbstractModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     # 적립된 마일리지 양

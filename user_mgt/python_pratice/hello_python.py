@@ -110,3 +110,42 @@ if __name__ == '__main__':
     for sub_list in sample:
         if find in sub_list:
             print('exist!!')
+
+    sample = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    find = 10
+    found = False
+
+    for item in sample:
+        if find == item:
+            print('(find)를 찾음 ')
+            found = True
+            break
+    if not found:
+        print('(find)를 찾지못함 ')
+
+    fruits = 'apple,banana,melon'.split(',')
+    colors = 'red yellow green purple'.split(' ')
+
+    for fruit, color in zip(fruits, colors):
+        print(f'{fruit}, {color}')
+
+    print('-------------')
+    index = 0
+    for fruit in fruits:
+        print(fruit + ', ' + colors[index])
+        index += 1
+
+    print('---------------')
+    for index, item in enumerate(fruits):
+        print(item + ', ' + colors[index])
+
+    print('---------------')
+    long_list, short_list = (colors, fruits) if len(colors) > len(fruits) else (fruits, colors)
+
+    for index, item in enumerate(short_list):
+        print(item, long_list[index])
+
+    for x in range(2, 10):
+        for y in range(1, 10):
+            print(str(x) + ' x ' + str(y) + ' = ' + str(x * y))
+        print("\n------\n")

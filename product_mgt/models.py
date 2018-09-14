@@ -2,22 +2,16 @@
 
 from django.db import models
 
-
-# 모든 객체는 객체가 등록되는 시점을 기록해야하기때문에 이 두가지 필드를 가지고잇는다.
-class AbstractModel(models.Model):
-    reg_date = models.DateTimeField(auto_now_add=True)
-    modified_date = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        abstract = True
+from ksr_app.models import AbstractModel
+from product_orders_mgt.models import Orders
 
 
-class Restaurant(models, AbstractModel):
-    name = models.CharField(null=False)
-    rest_owner = models.CharField(null=False)
+class Restaurant(AbstractModel):
+    name = models.CharField(null=False, max_length=100)
+    restaurant_owner = models.CharField(null=False, max_length=100)
 
 
-class Food(models.Model, AbstractModel):
+class Food(AbstractModel):
     name = models.CharField(max_length=50)
     price = models.PositiveIntegerField()
 
@@ -30,7 +24,7 @@ class Food(models.Model, AbstractModel):
         ordering = ['id', 'name']
 
 
-class FoodOption(models.Model, AbstractModel):
+class FoodOption(AbstractModel):
     name = models.CharField(max_length=100)
 
     price = models.PositiveIntegerField()
@@ -42,9 +36,12 @@ class FoodOption(models.Model, AbstractModel):
     # modified_date = models.DateTimeField(auto_now=True)
 
 
-class OrderedFood(models.Model, AbstractModel):
+class OrderedFood(AbstractModel):
     # 주문되어지는 음식 1개
     required_food = models.OneToOneField(Food, null=False, on_delete=models.CASCADE)
 
     # 그 음식에 걸려있는 다양한 옵션 곱빼기, 감자튀김 추가 등등
     required_options = models.ManyToManyField(FoodOption)
+
+    # 주문된 음식이 걸려있는 주문 M(OrderedFood) : 1(Orders)
+    owned_order = models.ForeignKey(Orders)
