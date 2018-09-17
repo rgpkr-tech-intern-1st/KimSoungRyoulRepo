@@ -1,6 +1,7 @@
-from django.conf.urls import include
+from django.conf.urls import include, url
 from django.contrib import admin
 from django.urls import path
+from rest_framework_swagger.views import get_swagger_view
 
 '''
 스프링의 Dispatcher-Servlet 같은 느낌이다 
@@ -15,11 +16,14 @@ FrontController
 우아한 표현? 이였나 url 표현식은 다음주에 공부하자 
 
 '''
+schema_view = get_swagger_view(title='Pastebin API', url='/')
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+
+    url(r'^$', schema_view),
+
     path('members/', include('user_mgt.urls')),
     path('products/', include('product_mgt.urls')),
     path('orders/', include('product_orders_mgt.urls')),
-
+    path('admin/', admin.site.urls),
 ]

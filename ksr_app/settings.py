@@ -40,12 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'rest_framework',
+    'rest_framework_swagger',
     'user_mgt',
     'product_mgt',
     'product_orders_mgt',
     'payments',
-
-
+    'ksr_app',
 
 ]
 
@@ -79,7 +79,6 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'ksr_app.wsgi.application'
 
 # Database
@@ -95,6 +94,12 @@ DATABASES = {
         'PORT': '5432',
 
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': 'psql_database',
+    #
+    # }
+
 }
 
 #
