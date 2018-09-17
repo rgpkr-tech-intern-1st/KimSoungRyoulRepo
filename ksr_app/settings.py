@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'product_mgt',
     'product_orders_mgt',
     'payments',
+    'ksr_app',
 
 
 
