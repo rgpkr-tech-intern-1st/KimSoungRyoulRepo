@@ -13,7 +13,7 @@
 
 ### 3. auth
       * basic auth
-      * OAuth2??
+      
       * facabook google login?
 
 ### 4. UnitTest
