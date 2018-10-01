@@ -1,5 +1,5 @@
-from user_mgt.python_pratice import game
-from user_mgt.python_pratice import shop
+from member.python_pratice import game
+from member.python_pratice import shop
 
 
 def turn_on():

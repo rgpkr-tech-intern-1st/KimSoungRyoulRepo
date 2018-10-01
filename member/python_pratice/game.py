@@ -1,4 +1,4 @@
-from user_mgt.python_pratice.shop import buy_item
+from member.python_pratice.shop import buy_item
 
 
 def play_game():

@@ -1,4 +1,4 @@
-from user_mgt.python_pratice import hello_modules
+from member.python_pratice import hello_modules
 
 
 def print_level():

@@ -23,13 +23,23 @@ class Library:
 
 
 class Book:
+    book_list = []
 
     def __init__(self, title, location):
         self.title = title
         self.location = location
+        self.book_list.append(self)
 
-    def __str__(self):
+    def __repr__(self):
         return '(책 :' + self.title + ' "location: "' + self.location + ') '
+
+    @classmethod
+    def get_total_book_info(cls):
+        '''
+        모든 책 정보 문자열을 리턴
+        :return:
+        '''
+        return cls.book_list
 
     @property
     def is_borrowed(self):
@@ -71,19 +81,21 @@ if __name__ == '__main__':
                       ]
                       )
 
-    library.add_book(Book(title='칼의노래', location='Library'))
+    library.add_book(Book(title='칼의노래1', location='Library'))
 
     user1 = User(name='KSR', book_list=[])
 
-    print('대출하기전 책 리스트  : ', *library.book_list)
+    print('대출하기전 책 리스트  : ', library.book_list)
 
     book = user1.borrow_book(library, '인사이드 피플웨어')
     print(book)
-    print('대출 후 책 리스트  : ', *library.book_list)
-    print('user1 의 소유리스트 : ', *user1.book_list)
+    print('대출 후 책 리스트  : ', library.book_list)
+    print('user1 의 소유리스트 : ', user1.book_list)
     library.info
 
     book = user1.return_book(library, '인사이드 피플웨어')
     print(book)
     library.info
-   
+
+    print(Book.get_total_book_info())
+    print(Book.book_list)
