@@ -2,19 +2,19 @@
 
 from django.db import models
 
-from product_orders_mgt.models import Orders
-from user_mgt.models import AbstractModel
-from user_mgt.models import RestaurantOwnerInfoVO
+from member.models.value_obj import RestaurantOwnerInfoVO
+from member.models.value_obj import TimeStampModel
+from orders.models.order import Order
 
 
-class Restaurant(AbstractModel, RestaurantOwnerInfoVO):
+class Restaurant(TimeStampModel, RestaurantOwnerInfoVO):
     id = models.BigAutoField(primary_key=True, null=False, default='')
 
     name = models.CharField(null=False, max_length=100)
     restaurant_owner = models.CharField(null=False, max_length=100, default='no_name')
 
 
-class Food(AbstractModel):
+class Food(TimeStampModel):
     name = models.CharField(max_length=50)
     price = models.PositiveIntegerField()
 
@@ -23,7 +23,7 @@ class Food(AbstractModel):
         ordering = ['id', 'name']
 
 
-class FoodOption(AbstractModel):
+class FoodOption(TimeStampModel):
     name = models.CharField(max_length=100)
 
     price = models.PositiveIntegerField()
@@ -31,7 +31,7 @@ class FoodOption(AbstractModel):
     related_food = models.ForeignKey(Food, on_delete=models.CASCADE, null=False, default='')
 
 
-class OrderedFood(AbstractModel):
+class OrderedFood(TimeStampModel):
     # 주문되어지는 음식 1개
     required_food = models.OneToOneField(Food, null=False, on_delete=models.CASCADE, default='')
 
@@ -40,4 +40,4 @@ class OrderedFood(AbstractModel):
 
     # 주문된 음식이 걸려있는 주문 M(OrderedFood) : 1(Orders)
     # 주문 기록이 지워지면 주문 기록과함께 연결된 주문된 음식들도 삭제
-    owned_order = models.ForeignKey(Orders, on_delete=models.CASCADE, default='')
+    owned_order = models.ForeignKey(Order, on_delete=models.CASCADE, default='')

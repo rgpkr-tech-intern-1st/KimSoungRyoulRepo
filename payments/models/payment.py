@@ -6,10 +6,10 @@ from django.db import models
 #    => KaKaoPayment
 #    => NaverPayment
 #    => CreditPayment
-from ksr_app.models import AbstractModel
+from member.models.value_obj import TimeStampModel
 
 
-class Payment(AbstractModel):
+class Payment(TimeStampModel):
     # 일단 User 쪽 먼저 짜고 그다음에 하기
     id = models.BigAutoField(primary_key=True)
     price = models.PositiveIntegerField()

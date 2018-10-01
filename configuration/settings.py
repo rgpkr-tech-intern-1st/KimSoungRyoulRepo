@@ -29,8 +29,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Application definition
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,13 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+
     'rest_framework',
     'rest_framework_swagger',
-    'user_mgt',
-    'product_mgt',
-    'product_orders_mgt',
+
+    'member',
+    'product',
+    'orders',
     'payments',
-    'ksr_app',
 
 ]
 
@@ -60,7 +61,13 @@ MIDDLEWARE = [
 
 ]
 
-ROOT_URLCONF = 'ksr_app.urls'
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,
+
+}
+
+ROOT_URLCONF = 'configuration.urls'
 
 TEMPLATES = [
     {
@@ -74,52 +81,62 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'ksr_app.wsgi.application'
+WSGI_APPLICATION = 'configuration.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'psql_database',
-        'USER': 'localroot',
-        'PASSWORD': '1234',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
 
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'psql_database',
+            'USER': 'postgres',
+            'PASSWORD': '1234',
+            'HOST': '127.0.0.1',
+            'PORT': '5432',
+        }
     }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': 'psql_database',
-    #
-    # }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'psql_database',
+            'USER': 'postgres',
+            'PASSWORD': '1234',
+            'HOST': '127.0.0.1',
+            'PORT': '5432',
+        }
+    }
 
-}
+# LOGIN_URL = '/api/v1/auth/basic/'  # 기본값
+# LOGOUT_URL = '/api/v1/auth/logout/'  # 기본값
+# LOGIN_REDIRECT_URL = '/'
 
-#
 # 로깅 설정은 나중에
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'console': {
-#             'level': 'DEBUG',
-#             'class': 'logging.StreamHandler',
-#         }
-#     },
-#     'loggers': {
-#         'django.db.backends': {
-#             'handlers': ['console'],
-#             'level': 'DEBUG',
-#         },
-#     }
-# }
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

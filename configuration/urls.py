@@ -1,6 +1,5 @@
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.urls import path
 from rest_framework_swagger.views import get_swagger_view
 
 '''
@@ -16,14 +15,16 @@ FrontController
 우아한 표현? 이였나 url 표현식은 다음주에 공부하자 
 
 '''
-schema_view = get_swagger_view(title='Pastebin API', url='/')
+
+schema_view = get_swagger_view(title='Yogiyo API')
 
 urlpatterns = [
 
-    url(r'^$', schema_view),
+    url('admin/', admin.site.urls),
+    url(r'^api/v1/doc/', schema_view),
+    url(r'^api/v1/auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/v1/members/', include('member.urls')),
+    url(r'^api/v1/products/', include('product.urls')),
+    url(r'^api/v1/orders/', include('orders.urls')),
 
-    path('members/', include('user_mgt.urls')),
-    path('products/', include('product_mgt.urls')),
-    path('orders/', include('product_orders_mgt.urls')),
-    path('admin/', admin.site.urls),
 ]
