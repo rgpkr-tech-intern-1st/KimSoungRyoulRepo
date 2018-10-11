@@ -29,7 +29,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -41,12 +40,13 @@ INSTALLED_APPS = [
     'django_extensions',
 
     'rest_framework',
-    'rest_framework_swagger',
+    'drf_yasg',
 
     'member',
     'product',
     'orders',
     'payments',
+    'webpage',
 
 ]
 
@@ -60,6 +60,23 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
 ]
+
+LOGIN_URL = 'rest_framework:login'
+LOGOUT_URL = 'rest_framework:logout'
+
+# SWAGGER_SETTINGS = {
+#     'SECURITY_DEFINITIONS': {
+#         'basic': {
+#             'type': 'basic'
+#         }
+#     },
+#
+# }
+
+# REDOC_SETTINGS = {
+#    'LAZY_RENDERING': False,
+#
+# }
 
 GRAPH_MODELS = {
     'all_applications': True,
@@ -96,12 +113,8 @@ WSGI_APPLICATION = 'configuration.wsgi.application'
 if DEBUG:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'psql_database',
-            'USER': 'postgres',
-            'PASSWORD': '1234',
-            'HOST': '127.0.0.1',
-            'PORT': '5432',
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
 else:

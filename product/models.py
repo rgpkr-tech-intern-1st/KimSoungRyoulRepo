@@ -8,15 +8,18 @@ from orders.models.order import Order
 
 
 class Restaurant(TimeStampModel, RestaurantOwnerInfoVO):
-    id = models.BigAutoField(primary_key=True, null=False, default='')
+    id = models.BigAutoField('식당의 고유 id', primary_key=True, null=False, default='')
 
-    name = models.CharField(null=False, max_length=100)
-    restaurant_owner = models.CharField(null=False, max_length=100, default='no_name')
+    name = models.CharField('식당 이름 ', null=False, max_length=100)
+    restaurant_owner = models.CharField('식당 사장님 이름 ', null=False, max_length=100, default='no_name')
 
 
 class Food(TimeStampModel):
     name = models.CharField(max_length=50)
     price = models.PositiveIntegerField()
+
+    food_owned_restaurant = models.ForeignKey(help_text='음식(메뉴)을 작성한 식당 고유번호',
+                                              to=Restaurant, on_delete=models.CASCADE, null=False, default='')
 
     class Meta:
         # id로 정렬 하고 그다음 음식의 이름순으로 정렬
@@ -27,7 +30,6 @@ class FoodOption(TimeStampModel):
     name = models.CharField(max_length=100)
 
     price = models.PositiveIntegerField()
-
     related_food = models.ForeignKey(Food, on_delete=models.CASCADE, null=False, default='')
 
 

@@ -21,7 +21,17 @@ class Payment(TimeStampModel):
     pg_type = models.CharField(null=False, max_length=50)
 
 
+class NaverPayPayment(Payment, models.Model):
+    payment_id = models.OneToOneField(Payment, primary_key=True, on_delete=models.CASCADE)
+
+    naver_email = models.CharField(help_text='결제한 네이버 페이 계정', null=False, max_length=100)
+    n_pay_payment_id = models.CharField(help_text='네이버 페이쪽 결제내역 id', null=False, max_length=100)
+    n_pay_used_payment_method = models.CharField(help_text='네이버 페이쪽에서 결제 방식', null=False, max_length=100)
+
+
 # 이렇게 pg사별로 여러개 객체 분리
 class CreditCardPayment(Payment):
+    payment_id = models.OneToOneField(Payment, primary_key=True, on_delete=models.CASCADE)
+
     account_num = models.CharField(null=False, max_length=100)
     bank_type = models.CharField(null=False, max_length=50)

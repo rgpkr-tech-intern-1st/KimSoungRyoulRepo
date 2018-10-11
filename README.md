@@ -18,3 +18,20 @@
 
 ### 4. UnitTest
       * 테스트 코드는 어떻게 만들어야 하는가?
+      
+      
+      
+## 공부 자료
+    (Add a method on a custom manager (usually preferred))
+    class BookManager(models.Manager):
+    def create_book(self, title):
+        book = self.create(title=title)
+        # do something with the book
+        return book
+
+    class Book(models.Model):
+        title = models.CharField(max_length=100)
+    
+        objects = BookManager()
+    
+    book = Book.objects.create_book("Pride and Prejudice")

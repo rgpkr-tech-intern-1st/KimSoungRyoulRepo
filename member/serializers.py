@@ -12,11 +12,11 @@ class UserInfoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserInfo
-        fields = ('name', 'phone_num', 'owner_mileage_amount', 'account')
+        fields = ('name', 'phone_num', 'owner_mileage_amount', 'account', 'owner_mileage_amount')
 
 
 class AccountSerializer(serializers.ModelSerializer):
-    userinfo = UserInfoSerializer(required=True, many=False, )
+    userinfo = UserInfoSerializer(help_text='회원의 개인정보 객체', required=True, many=False, )
 
     # 회원 계정생성시에 권한그룹도 같이 껴넣어야함
     def create(self, validated_data):
@@ -41,6 +41,7 @@ class AccountSerializer(serializers.ModelSerializer):
                                 phone_num=validated_data['userinfo']['phone_num'],
                                 owner_mileage_amount=validated_data['userinfo']['owner_mileage_amount']
                                 )
+
         return account
 
     def update(self, instance, validated_data):
@@ -49,4 +50,5 @@ class AccountSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Account
-        fields = ('username', 'password', 'first_name', 'last_name', 'email', 'groups', 'userinfo')
+        fields = (
+            'username', 'password', 'first_name', 'last_name', 'email', 'groups', 'userinfo')
