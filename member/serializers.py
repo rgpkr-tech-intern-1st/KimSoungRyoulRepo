@@ -2,6 +2,27 @@ from rest_framework import serializers
 
 from member.models import Account
 from member.models.user_info import UserInfo
+from product.models import Foo, Bar
+
+
+class BarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bar
+        fields = '__all__'
+
+
+class FooSerializer(serializers.ModelSerializer):
+    foo_var = BarSerializer(help_text='m대m 관계', many=True)
+
+    class Meta:
+        model = Foo
+        fields = '__all__'
+
+
+class FooCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Foo
+        fields = '__all__'
 
 
 class UserInfoSerializer(serializers.ModelSerializer):

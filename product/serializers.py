@@ -10,7 +10,7 @@ class FoodOptionSerializer(serializers.ModelSerializer):
 
 
 class FoodSerializer(serializers.ModelSerializer):
-    food_option = FoodOptionSerializer(help_text='음식이 가진 추가옵션', required=False, many=True)
+    product_foodoption_set = FoodOptionSerializer(help_text='음식이 가진 추가옵션', required=False, many=True)
 
     def create(self, validated_data):
         print('아무 것도 안하는 create 메서드 !!!!!!!!!!!')
@@ -18,7 +18,7 @@ class FoodSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Food
-        fields = ('name', 'price', 'food_option')
+        fields = ('name', 'price', 'product_foodoption_set')
 
 
 class RestaurantSerializer(serializers.ModelSerializer):

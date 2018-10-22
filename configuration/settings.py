@@ -42,11 +42,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
 
-    'member',
-    'product',
-    'orders',
-    'payments',
-    'webpage',
+    'member.apps.MemberAppConfig',
+    'product.apps.ProductAppConfig',
+    'orders.apps.OrdersAppConfig',
+    'payments.apps.PaymentsConfig',
+    'webpage.apps.WebpageConfig',
 
 ]
 
@@ -64,19 +64,19 @@ MIDDLEWARE = [
 LOGIN_URL = 'rest_framework:login'
 LOGOUT_URL = 'rest_framework:logout'
 
-# SWAGGER_SETTINGS = {
-#     'SECURITY_DEFINITIONS': {
-#         'basic': {
-#             'type': 'basic'
-#         }
-#     },
-#
-# }
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'basic': {
+            'type': 'basic'
+        }
+    },
 
-# REDOC_SETTINGS = {
-#    'LAZY_RENDERING': False,
-#
-# }
+}
+
+REDOC_SETTINGS = {
+    'LAZY_RENDERING': False,
+
+}
 
 GRAPH_MODELS = {
     'all_applications': True,
@@ -109,25 +109,34 @@ WSGI_APPLICATION = 'configuration.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'psql_database',
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'psql_database',
-            'USER': 'postgres',
-            'PASSWORD': '1234',
-            'HOST': '127.0.0.1',
-            'PORT': '5432',
-        }
-    }
+}
+# if DEBUG:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': os.path.join(BASE_DIR, 'psql_database.sqlite3'),
+#         }
+#     }
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.sqlite3.backends.postgresql_psycopg2',
+#             'NAME': 'psql_database.sqlite3',
+#             'USER': 'postgres',
+#             'PASSWORD': '1234',
+#             'HOST': '127.0.0.1',
+#             'PORT': '5432',
+#         }
+#     }
 
 # LOGIN_URL = '/api/v1/auth/basic/'  # 기본값
 # LOGOUT_URL = '/api/v1/auth/logout/'  # 기본값

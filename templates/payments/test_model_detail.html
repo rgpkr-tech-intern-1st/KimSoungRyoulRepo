@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+
+{% block content %}
+
+    <div>
+        <h2>{{ test_model.text }}</h2>
+
+        <h2>{{ test_model.text2 }}</h2>
+
+        {% for test_b in test_model.test_b_set %}
+            <div>
+                <p>{{ text_b.hi_text1 }}</p>
+                <h1>{{ text.hi_text2 }}</h1>
+
+            </div>
+        {% endfor %}
+
+        <h1>데이터끝 </h1>
+    </div>
+
+
+{% endblock %}

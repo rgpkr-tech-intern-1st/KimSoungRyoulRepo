@@ -12,3 +12,4 @@ urlpatterns = [
     path(r'', include((router.urls, 'foods'), namespace='this_is_foodAPI'), name='food_api'),
     path(r'restaurants/', RestaurantCreateAPIView.as_view(), name='restaurant_api'),
 ]
+

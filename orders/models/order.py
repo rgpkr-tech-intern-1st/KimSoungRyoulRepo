@@ -1,12 +1,12 @@
 # Create your models here.
 from django.db import models
+from django_extensions.db.models import TimeStampedModel
 
 from member.models import Account
-from member.models.value_obj import TimeStampModel
-from payments.models.payment import Payment
+from payments.models.entity.payment import Payment
 
 
-class Order(TimeStampModel):
+class Order(TimeStampedModel):
     # 주문 기록과 결제기록은 서로 하나만 남게 삭제될수 없다.
     owned_payment = models.ForeignKey(Payment, on_delete=models.PROTECT, null=False)
 
@@ -14,3 +14,4 @@ class Order(TimeStampModel):
     account_owned_order = models.ForeignKey(Account, on_delete=models.DO_NOTHING, null=False, default=0)
 
     # 1:n 에서 1에 해당하는 Orders 에는 별다른 선언을 하지 않음 OrderedFood 쪽에서 외래키 연결선언
+    descriptions = models.CharField(max_length=100, null=False, default='no description Contents')

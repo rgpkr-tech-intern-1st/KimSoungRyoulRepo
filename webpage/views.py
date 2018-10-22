@@ -3,10 +3,30 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 
 from member.models import Account
+from payments.models.entity.payment import TestA
 
 
 def index(requests):
     return render(request=requests, template_name='index.html')
+
+
+class TestModelDetailView(DetailView):
+    template_name = 'payments/test_model_detail.html'
+
+    pk_url_kwarg = 'pk'
+
+    context_object_name = 'test_model'
+
+    def get_queryset(self):
+        print('쿼리셋 통과?')
+        return TestA.objects.all()
+
+    def get_context_data(self, **kwargs):
+        print('통과하나? ')
+        context = super(TestModelDetailView, self).get_context_data(**kwargs)
+        context['test_model'] = TestA.objects.prefetch_related('test_b_set').filter(pk=self.kwargs['pk'])
+
+        return context
 
 
 class AccountListView(ListView):

@@ -1,4 +1,3 @@
-# Create your views here.
 import coreapi
 import coreschema
 from django.utils.decorators import method_decorator
@@ -10,7 +9,26 @@ from rest_framework.schemas import AutoSchema
 
 from member.models import Account
 from member.models.user_info import UserInfo
-from member.serializers import UserInfoSerializer, AccountSerializer
+from member.serializers import UserInfoSerializer, AccountSerializer, FooSerializer, BarSerializer, FooCreateSerializer
+from product.models import Foo, Bar
+
+
+class FooAPIView(viewsets.ModelViewSet):
+    queryset = Foo.objects.all()
+
+    def get_serializer_class(self):
+        print('-----------', self.request.method.lower() == 'get')
+        if self.request.method.lower() == 'get':
+            print('get입니다')
+            return FooSerializer
+        else:
+            print('post 입니다')
+            return FooCreateSerializer
+
+
+class BarAPIView(viewsets.ModelViewSet):
+    queryset = Bar.objects.all()
+    serializer_class = BarSerializer
 
 
 class UserInfoAPIView(GenericAPIView):

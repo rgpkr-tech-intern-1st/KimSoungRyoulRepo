@@ -2,7 +2,7 @@ from django.db import models
 
 from member.models import Account
 from member.models.value_obj import TimeStampModel, AddressVO
-from payments.models.payment import Payment
+from payments.models.entity.payment import Payment
 
 
 class UserInfo(TimeStampModel):

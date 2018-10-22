@@ -8,10 +8,9 @@ from orders.models.order import Order
 
 
 class Restaurant(TimeStampModel, RestaurantOwnerInfoVO):
-    id = models.BigAutoField('식당의 고유 id', primary_key=True, null=False, default='')
-
     name = models.CharField('식당 이름 ', null=False, max_length=100)
     restaurant_owner = models.CharField('식당 사장님 이름 ', null=False, max_length=100, default='no_name')
+    # related_name 은 역방향 참조를위한 이름
 
 
 class Food(TimeStampModel):
@@ -30,7 +29,13 @@ class FoodOption(TimeStampModel):
     name = models.CharField(max_length=100)
 
     price = models.PositiveIntegerField()
-    related_food = models.ForeignKey(Food, on_delete=models.CASCADE, null=False, default='')
+
+    # %(class)s : 상속받은 클래스명의 소문자화
+    # %(app_label)s : 상속받은 클래스가 속한 애플리케이션명의 소문자화
+    related_food = models.ForeignKey(Food, related_name='%(app_label)s_%(class)s_set',
+                                     related_query_name='%(app_label)s_%(class)s',
+                                     on_delete=models.CASCADE, null=False,
+                                     default='')
 
 
 class OrderedFood(TimeStampModel):
@@ -43,3 +48,13 @@ class OrderedFood(TimeStampModel):
     # 주문된 음식이 걸려있는 주문 M(OrderedFood) : 1(Orders)
     # 주문 기록이 지워지면 주문 기록과함께 연결된 주문된 음식들도 삭제
     owned_order = models.ForeignKey(Order, on_delete=models.CASCADE, default='')
+
+
+class Bar(models.Model):
+    bar_var = models.CharField(max_length=100)
+
+
+class Foo(models.Model):
+    ex_field = models.CharField(max_length=100, null=True)
+
+    foo_var = models.ManyToManyField(to=Bar, blank=True)

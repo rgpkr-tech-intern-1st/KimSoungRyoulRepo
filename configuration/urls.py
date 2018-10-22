@@ -19,7 +19,8 @@ FrontController
 
 '''
 
-# swagger_schema_view = get_swagger_view(title='무난한 쇼핑몰 API')
+# dummy_datas.set_dummy_data()
+
 
 schema_view = get_schema_view(
     openapi.Info(

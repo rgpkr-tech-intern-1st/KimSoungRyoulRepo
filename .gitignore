@@ -4,6 +4,6 @@
 
 
 db.sqlite3
-psql_database
+psql_database.sqlite3
 
 /venv

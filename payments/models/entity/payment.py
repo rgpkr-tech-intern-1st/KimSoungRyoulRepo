@@ -35,3 +35,25 @@ class CreditCardPayment(Payment):
 
     account_num = models.CharField(null=False, max_length=100)
     bank_type = models.CharField(null=False, max_length=50)
+
+
+class TestB(models.Model):
+    hi_text1 = models.CharField(max_length=100)
+
+    hi_text2 = models.CharField(max_length=100)
+
+
+class TestA(models.Model):
+    text = models.CharField(max_length=100)
+
+    text2 = models.CharField(max_length=100)
+
+    test_b_set = models.ManyToManyField(to=TestB,
+                                        blank=True,
+                                        )
+
+
+class TestModel(TimeStampModel):
+    text = models.CharField(max_length=100)
+
+    text2 = models.CharField(max_length=100)
