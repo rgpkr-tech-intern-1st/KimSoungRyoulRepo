@@ -20,6 +20,8 @@ class Food(TimeStampModel):
     food_owned_restaurant = models.ForeignKey(help_text='음식(메뉴)을 작성한 식당 고유번호',
                                               to=Restaurant, on_delete=models.CASCADE, null=False, default='')
 
+    upload = models.FileField(upload_to='uploads/%Y/%m/%d/', default='')
+
     class Meta:
         # id로 정렬 하고 그다음 음식의 이름순으로 정렬
         ordering = ['id', 'name']

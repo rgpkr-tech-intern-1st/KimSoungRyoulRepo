@@ -22,10 +22,10 @@ FrontController
 # dummy_datas.set_dummy_data()
 
 
-schema_view = get_schema_view(
+schema_view_v1 = get_schema_view(
     openapi.Info(
         title="안녕 Django API",
-        default_version='version Alpha 0.0.1',
+        default_version='v1',
         description="장고 재밌음 이건 descriptions입니다~ ",
         terms_of_service="https://github.com/rgpkr-tech-intern-1st",
         contact=openapi.Contact(email="KimSoungRyoul@gmail.com"),
@@ -37,24 +37,26 @@ schema_view = get_schema_view(
 
 )
 
+
 urlpatterns = [
     # url(r'^) == path('')
     url('admin/', admin.site.urls),
 
-    path('swagger<str:format>', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    path('api/v1/doc/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui', ),
-    path('api/v1/doc/redoc', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('swagger_v1<str:format>', schema_view_v1.without_ui(cache_timeout=0), name='schema-json'),
+    path('api/v1/doc/', schema_view_v1.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui', ),
+    path('api/v1/doc/redoc', schema_view_v1.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+
 
     # Template 전용 App
     url(r'^', include('webpage.urls')),
 
     # 인증 API
-    url(r'^api/v1/auth/', include('rest_framework.urls', namespace='rest_basic_auth')),
+    url(r'^api/auth/', include('rest_framework.urls', namespace='rest_basic_auth')),
 
     # 도메인별 API 앱
-    url(r'^api/v1/members/', include('member.urls')),
-    url(r'^api/v1/products/', include('product.urls')),
-    url(r'^api/v1/orders/', include('orders.urls')),
-    url(r'^api/v1/payments/', include('payments.urls')),
+    url(r'^api/members/', include('member.urls')),
+    url(r'^api/products/', include('product.urls')),
+    url(r'^api/orders/', include('orders.urls', )),
+    url(r'^api/payments/', include('payments.urls')),
 
 ]

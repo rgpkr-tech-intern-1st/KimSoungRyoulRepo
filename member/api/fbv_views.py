@@ -16,6 +16,7 @@ class MyViewSet(ViewSet):
     def list(self, request):
         # I can assume now that only GET or POST requests make it this far
         # ...
+        print(request.version)
 
         queryset = Account.objects.filter(is_superuser=True)
         serializer = AccountSerializer(queryset, many=True)

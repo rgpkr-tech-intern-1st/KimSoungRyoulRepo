@@ -1,6 +1,5 @@
 """
 
-
 superuser
 id : root
 password: rlatjdfuf
@@ -8,8 +7,6 @@ password: rlatjdfuf
 Maven 의 pom.xml 과 springboot의 application.properties 를 합쳐놓은듯 하다
 
 project의 필요 lib는 virtual Env 에서 하고 여기서 서비스규모의 모듈들을 통합한다
-
-
 
 """
 
@@ -29,6 +26,23 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# AWS Setting
+AWS_REGION = 'ap-northeast-2'
+AWS_STORAGE_BUCKET_NAME = 'intern-project-storage'
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_HOST = 's3.%s.amazonaws.com' % AWS_REGION
+AWS_ACCESS_KEY_ID = 'AKIAIAF4WFCGKFYCXOAQ'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+# # Static Setting
+# STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+# STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+# Media Setting
+MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -41,6 +55,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'drf_yasg',
+    'mptt',
 
     'member.apps.MemberAppConfig',
     'product.apps.ProductAppConfig',
@@ -49,6 +64,16 @@ INSTALLED_APPS = [
     'webpage.apps.WebpageConfig',
 
 ]
+
+REST_FRAMEWORK = {
+    # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
+    #
+    # # Versioning
+    # 'DEFAULT_VERSION': 'v1',
+    # 'ALLOWED_VERSIONS': ('v1', 'v2', 'v3'),
+    # 'VERSION_PARAM': 'version2',
+
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

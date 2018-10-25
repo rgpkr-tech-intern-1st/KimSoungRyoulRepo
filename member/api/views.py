@@ -2,15 +2,22 @@ import coreapi
 import coreschema
 from django.utils.decorators import method_decorator
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import viewsets, authentication, permissions
-from rest_framework.generics import GenericAPIView
+from rest_framework import viewsets, authentication, permissions, versioning
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework.schemas import AutoSchema
+from rest_framework.versioning import AcceptHeaderVersioning
 
 from member.models import Account
 from member.models.user_info import UserInfo
 from member.serializers import UserInfoSerializer, AccountSerializer, FooSerializer, BarSerializer, FooCreateSerializer
 from product.models import Foo, Bar
+
+
+class CustomHeaderVersioning(AcceptHeaderVersioning):
+    # default_version = '0.1'
+    allowed_versions = ('1.0', '2.0', '0.1')
+    version_param = 'version'
 
 
 class FooAPIView(viewsets.ModelViewSet):
@@ -31,7 +38,7 @@ class BarAPIView(viewsets.ModelViewSet):
     serializer_class = BarSerializer
 
 
-class UserInfoAPIView(GenericAPIView):
+class UserInfoListAPIView(ListAPIView):
     """
         View to list all users in the system.
 
@@ -52,7 +59,7 @@ class UserInfoAPIView(GenericAPIView):
     def get_object(self):
         return UserInfo.objects.all()
 
-    def get(self, request, format=None):
+    def list(self, request):
         """
         Return a list of all users.
         """
@@ -60,6 +67,10 @@ class UserInfoAPIView(GenericAPIView):
         # userinfos = serializers.serialize("json", UserInfo.objects.all())
 
         return Response(userinfo_names)
+
+
+class UserInfoAPIViewSet(viewsets.ViewSet, UserInfoListAPIView):
+    pass
 
 
 class UserInfoViewSet(viewsets.ModelViewSet):
@@ -114,6 +125,8 @@ class UserInfoViewSet(viewsets.ModelViewSet):
     operation_description="회원 정보 전부 조회 합니다 ",
 ))
 class AccountViewSet(viewsets.ModelViewSet):
+    versioning_class = versioning.NamespaceVersioning
+
     """
     param -- asdfasdfasd
 

@@ -51,3 +51,7 @@ class RestaurantCreateAPIView(CreateAPIView):
 
     def get_serializer_class(self):
         return RestaurantSerializer
+
+    def create(self, request, *args, **kwargs):
+        print('레스토랑 Create API 의 버젼 : ', request.version)
+        return super().create(self, request, *args, **kwargs)

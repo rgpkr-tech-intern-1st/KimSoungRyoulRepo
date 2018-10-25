@@ -9,7 +9,8 @@ router.register(viewset=FoodViewSet, prefix='foods')
 
 urlpatterns = [
 
-    path(r'', include((router.urls, 'foods'), namespace='this_is_foodAPI'), name='food_api'),
-    path(r'restaurants/', RestaurantCreateAPIView.as_view(), name='restaurant_api'),
+    path(r'', include((router.urls, 'foods'), namespace='foods'), name='food_api'),
+    path(r'v1/restaurants/', RestaurantCreateAPIView.as_view(), name='v1'),
+    path(r'v2/restaurants/', RestaurantCreateAPIView.as_view(), name='v2'),
 ]
 
